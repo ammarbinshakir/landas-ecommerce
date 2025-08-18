@@ -7,11 +7,7 @@ interface AuthLayoutProps {
 }
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
-  return (
-    <div className="font-pretendard flex h-screen w-screen items-center justify-center]">
-      {children || <Outlet />}
-    </div>
-  );
+  return <div className="bg-[#fdf8ec] ">{children || <Outlet />}</div>;
 };
 
 export default AuthLayout;
