@@ -1,69 +1,191 @@
-# React + TypeScript + Vite
+# LANDAS E-commerce Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based e-commerce application built with TypeScript, Vite, and TailwindCSS. This application provides a complete shopping experience with responsive UI components, authentication, and product showcase features.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Installation](#installation)
+- [Development](#development)
+- [Building for Production](#building-for-production)
+- [Project Structure](#project-structure)
+- [Implementation Decisions](#implementation-decisions)
+- [Library Choices](#library-choices)
+- [SPA Routing Configuration](#spa-routing-configuration)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (v18.x or higher recommended)
+- Yarn or npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Setup
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd example
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+yarn
+# OR
+npm install
 ```
+
+## Development
+
+To start the development server with hot-reload:
+
+```bash
+yarn dev
+# OR
+npm run dev
+```
+
+The application will be available at `http://localhost:5173` by default.
+
+## Building for Production
+
+To build the application for production:
+
+```bash
+yarn build
+# OR
+npm run build
+```
+
+The built files will be in the `dist/` directory.
+
+To preview the production build locally:
+
+```bash
+yarn preview
+# OR
+npm run preview
+```
+
+### SPA Routing for Production Deployment
+
+For Single Page Applications (SPA) with client-side routing, you need to configure your server to redirect all requests to `index.html`. This allows the React Router to handle the routing on the client side.
+
+#### For Nginx:
+
+```nginx
+location / {
+  root /path/to/dist;
+  try_files $uri $uri/ /index.html;
+}
+```
+
+#### For Apache (.htaccess in dist/ folder):
+
+```apache
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+```
+
+#### For static file servers like Vercel, Netlify, or Firebase:
+
+These platforms typically have built-in settings for SPAs. Refer to their documentation for specific configuration options.
+
+## Project Structure
+
+```
+src/
+├── App.tsx              # Main application component
+├── main.tsx             # Application entry point
+├── components/          # Reusable UI components
+├── features/            # Feature-based modules
+│   ├── auth/            # Authentication feature
+│   │   ├── components/  # Auth-specific components
+│   │   ├── hooks/       # Auth-specific hooks
+│   │   └── utils/       # Auth-specific utilities
+│   └── main/            # Main feature modules
+├── pages/               # Page components
+├── routes/              # Routing configuration
+│   ├── Router.tsx       # Main router component
+│   └── routes.ts        # Route definitions
+└── shared/              # Shared utilities and components
+    ├── components/      # Shared UI components
+    │   ├── atoms/       # Smallest UI components
+    │   ├── molecules/   # Combination of atoms
+    │   └── organisms/   # Complex UI components
+    ├── constants/       # Application constants
+    ├── hooks/           # Custom React hooks
+    ├── layouts/         # Layout components
+    ├── stores/          # State management stores
+    ├── types/           # TypeScript type definitions
+    └── utils/           # Utility functions
+```
+
+## Implementation Decisions
+
+### Component Architecture
+
+The project follows an Atomic Design methodology, organizing components into:
+
+- **Atoms**: Smallest building blocks (buttons, inputs, etc.)
+- **Molecules**: Groups of atoms functioning together
+- **Organisms**: Complex UI components composed of molecules and atoms
+- **Templates**: Layout components that arrange organisms
+- **Pages**: Complete screens with specific business logic
+
+### Routing
+
+- React Router v7 for declarative routing with support for nested routes
+- Authentication-protected routes with redirection logic
+- Clear route definition structure for maintainability
+
+### Styling
+
+- TailwindCSS for utility-first styling approach
+- Component-based styling using className composition with tailwind-merge and clsx
+- Responsive design patterns implemented throughout the application
+
+## Library Choices
+
+### Core Libraries
+
+- **React 19**: Latest version of React with improved performance and new features
+- **TypeScript**: For static typing, better developer experience, and code quality
+- **Vite**: Modern build tool with faster compilation and better developer experience than webpack
+
+### Routing
+
+- **react-router-dom v7**: Declarative routing for React applications
+
+### Styling
+
+- **TailwindCSS v4**: Utility-first CSS framework
+- **@tailwindcss/aspect-ratio**: For maintaining consistent aspect ratios
+- **@tailwindcss/line-clamp**: For truncating text at specific line counts
+- **clsx & tailwind-merge**: For conditional and conflict-free className composition
+
+### HTTP Client
+
+- **Axios**: Feature-rich HTTP client with interceptors, request/response transformation
+
+### Development Tools
+
+- **ESLint**: For code quality and consistency
+- **TypeScript ESLint**: For TypeScript-specific linting rules
+
+## SPA Routing Configuration
+
+The application uses React Router v7 with a configuration that:
+
+1. Separates authenticated and non-authenticated routes
+2. Provides automatic redirects based on authentication status
+3. Supports nested layouts for different sections of the application
+
+The router setup enables a seamless user experience by handling all routes on the client side, preventing page reloads during navigation.
