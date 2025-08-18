@@ -24,7 +24,7 @@ A modern React-based e-commerce application built with TypeScript, Vite, and Tai
 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ammarbinshakir/landas-ecommerce.git
 cd example
 ```
 
