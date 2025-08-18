@@ -1,30 +1,38 @@
-import { useAuth } from "../shared/hooks/useAuth";
+import { Banner } from "../shared/components/organisms/Banner";
+import { FeatureShowcase } from "../shared/components/organisms/FeatureShowcase";
+import { Footer } from "../shared/components/organisms/Footer";
+import { Hero } from "../shared/components/organisms/Hero";
+import { ProductsSection } from "../shared/components/organisms/ProductsSection";
 
 const HomePage = () => {
-  const { user, logout } = useAuth();
-
   return (
-    <div className="p-8">
-      <div className="mb-8 bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold mb-4">
-          환영합니다, {user?.name || "Guest"}님!
-        </h1>
-        <p className="text-gray-600 mb-6">로그인에 성공했습니다.</p>
-
-        <div className="bg-gray-50 p-4 rounded-md border border-gray-200 mb-6">
-          <h2 className="text-lg font-semibold mb-2">사용자 정보</h2>
-          <p>
-            <span className="font-medium">ID:</span> {user?.id || "Unknown"}
-          </p>
-        </div>
-
-        <button
-          onClick={logout}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-        >
-          로그아웃
-        </button>
+    <div className="w-full">
+      {/* Hero Section */}
+      <div className="w-full">
+        <Hero />
       </div>
+
+      {/* Feature Showcase */}
+      <div className="mt-8">
+        <FeatureShowcase title="스타일과 실용성을 모두 담은 시즌 컬렉션" />
+      </div>
+
+      {/* Products Section */}
+      <ProductsSection />
+
+      {/* B2B Banner Section */}
+
+      <ProductsSection />
+      <div className="mb-5">
+        <Banner
+          title="B2B 전문 의류 쇼핑몰!"
+          subtitle="15년 이상의 노하우로 믿고 거래 하세요"
+          description="수많은 기업이 선택한 신뢰있는 소싱 솔루션, 지금 문의하세요"
+        />
+      </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
