@@ -6,6 +6,7 @@ A modern React-based e-commerce application built with TypeScript, Vite, and Tai
 
 - [Installation](#installation)
 - [Development](#development)
+- [Demo Credentials](#demo-credentials)
 - [Building for Production](#building-for-production)
 - [Project Structure](#project-structure)
 - [Implementation Decisions](#implementation-decisions)
@@ -47,6 +48,16 @@ npm run dev
 ```
 
 The application will be available at `http://localhost:5173` by default.
+
+## Demo Credentials
+
+For testing and demonstration purposes, you can use the following credentials to log in:
+
+| Email   | Password    |
+| ------- | ----------- |
+| user123 | password123 |
+
+> **Note**: These credentials are for demonstration purposes only and should be changed in a production environment.
 
 ## Building for Production
 
